@@ -3,5 +3,6 @@
 
     <string name="app_name">Fancy Tweets</string>
     <string name="login_label">Log in</string>
+    <string name="at_sign">\u0040</string>
 
 </resources>
