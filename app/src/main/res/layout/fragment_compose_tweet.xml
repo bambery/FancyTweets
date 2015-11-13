@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ivComposeClose"
+        android:src="@drawable/abc_ic_clear_mtrl_alpha"
+        android:layout_alignTop="@+id/btnComposeNewTweet"
+        android:layout_alignBottom="@+id/btnComposeNewTweet"
+        android:foregroundGravity="center_vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_tweet"
+        android:id="@+id/btnComposeNewTweet"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:singleLine="true"
+        android:background="@drawable/btn_bg_rounded_corners"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:padding="0dp"
+        android:layout_margin="0dp"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ivComposeProfilePhoto"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:minHeight="30dp"
+        android:minWidth="30dp"
+        android:background="#72b06e"
+        android:layout_below="@+id/btnComposeNewTweet"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/tvComposeUsername"
+        android:layout_below="@+id/btnComposeNewTweet"
+        android:layout_toRightOf="@+id/ivComposeProfilePhoto"
+        android:layout_toEndOf="@+id/ivComposeProfilePhoto"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="\@something"
+        android:id="@+id/tvComposeScreenname"
+        android:layout_below="@+id/tvComposeUsername"
+        android:layout_toRightOf="@+id/ivComposeProfilePhoto"
+        android:layout_toEndOf="@+id/ivComposeProfilePhoto"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/etComposeNewTweet"
+        android:layout_below="@+id/ivComposeProfilePhoto"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:gravity="top|left"
+        android:textCursorDrawable="@drawable/et_cursor_blue"/>
+
+</RelativeLayout>

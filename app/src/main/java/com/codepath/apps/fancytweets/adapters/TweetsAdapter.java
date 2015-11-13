@@ -50,11 +50,10 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                     .into(ivProfileImage);
 
         }
-        
+
  //       @Override
  //       public void onClick(View v) {
  //           // eventually handle clicks on list here
-        }
     }
 
     public TweetsAdapter(Context context, ArrayList<Tweet> tweets){
@@ -77,7 +76,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         Tweet tweet = mTweets.get(position);
-        viewHolder.bindTweet(tweet);thi
+        viewHolder.bindTweet(tweet);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
