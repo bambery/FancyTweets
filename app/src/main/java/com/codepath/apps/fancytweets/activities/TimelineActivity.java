@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.codepath.apps.fancytweets.EndlessRecyclerOnScrollListener;
 import com.codepath.apps.fancytweets.R;
 import com.codepath.apps.fancytweets.TwitterApplication;
 import com.codepath.apps.fancytweets.TwitterClient;
@@ -42,6 +43,18 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_tweet_timeline);
+
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener() {
+            @Override
+            public void onLoadMore(int page) {
+                getMoreTweets(getLastTweetId());
+                //eturn true; // ONLY if more data is actually being loaded; false otherwise.
+            }
+        });
         client = TwitterApplication.getRestClient(); // singleton client
         // set custom toolbar
         setupMyToolbar();
@@ -54,9 +67,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
 
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+
 
         // specify an adapter
         aTweets = new com.codepath.apps.fancytweets.adapters.TweetsAdapter(this, tweets);

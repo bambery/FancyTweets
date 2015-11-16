@@ -9,8 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/twitter_light_blue"
-        android:elevation="0dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"/>
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:layout_above="@+id/rv_tweet_timeline"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_tweet_timeline"
