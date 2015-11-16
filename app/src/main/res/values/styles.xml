@@ -1,16 +1,13 @@
 <resources>
-
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!--
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <item name="actionBarStyle">@style/MyActionBar</item>
     </style>
 
-    <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-    </style>
+    <!-- TODO: I think this is being done incorrectly but I don't know how else to hide the toolbar -->
+    <style name="MyActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:background">@color/twitter_light_blue</item>
+        <item name="background">@color/twitter_light_blue</item>
 
+    </style>
 </resources>

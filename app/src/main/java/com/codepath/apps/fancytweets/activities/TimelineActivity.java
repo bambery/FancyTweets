@@ -42,6 +42,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
+        setupMyToolbar();
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_tweet_timeline);
 
         // use a linear layout manager
@@ -57,7 +58,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
         });
         client = TwitterApplication.getRestClient(); // singleton client
         // set custom toolbar
-        setupMyToolbar();
+
 
         //create the arraylist from data source
         tweets = new ArrayList<>();
@@ -104,6 +105,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setTitle(R.string.title_activity_timeline);
         myToolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
+        myToolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.twitter_light_blue));
         myToolbar.inflateMenu(R.menu.toolbar_timeline_activity);
         // launch compose tweet activity if button is clicked
         myToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -111,7 +113,8 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
             public boolean onMenuItemClick(MenuItem item) {
                 int id = item.getItemId();
                 if (id == R.id.action_new_tweet) {
-                    showNewTweetDialog();
+                    Toast.makeText(getApplicationContext(), "you clicked it", Toast.LENGTH_SHORT).show();
+                    //showNewTweetDialog();
                     return true;
                 }
                 return false;
