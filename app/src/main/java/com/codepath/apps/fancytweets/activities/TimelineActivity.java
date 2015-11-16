@@ -1,8 +1,10 @@
 package com.codepath.apps.fancytweets.activities;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 import com.codepath.apps.fancytweets.R;
 import com.codepath.apps.fancytweets.TwitterApplication;
 import com.codepath.apps.fancytweets.TwitterClient;
+import com.codepath.apps.fancytweets.adapters.TweetsPagerAdapter;
 import com.codepath.apps.fancytweets.fragments.ComposeTweetDialog;
 import com.codepath.apps.fancytweets.fragments.HomeTimelineFragment;
 import com.codepath.apps.fancytweets.fragments.TweetListFragment;
@@ -26,11 +29,16 @@ import org.json.JSONObject;
 
 public class TimelineActivity extends AppCompatActivity implements ComposeTweetDialog.OnSubmitNewTweetListener  {
 
+    // sliding tab layout guide: https://guides.codepath.com/android/Google-Play-Style-Tabs-using-TabLayout
+
+
     private Toolbar myToolbar;
     private TwitterClient client;
     private TweetListFragment tweetListFragment;
     private User currentUser;
     private HomeTimelineFragment homeTimelineFragment;
+    TabLayout tabLayout;
+    ViewPager viewPager;
 
 
 
@@ -39,9 +47,16 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
         client = TwitterApplication.getRestClient(); // singleton client
-        if (savedInstanceState == null) {
-            tweetListFragment = (TweetListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_timeline);
-        }
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setAdapter(new TweetsPagerAdapter(getSupportFragmentManager(),
+                                                           TimelineActivity.this));
+        //if (savedInstanceState == null) {
+        //    tweetListFragment = (TweetListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_timeline);
+        //
+        //}
+        tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        tabLayout.setupWithViewPager(viewPager);
+
         setupMyToolbar();
         setCurrentUser();
     }
@@ -98,7 +113,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
     }
 
     @Override
-    public void onNewTweetSubmitted(String tweetBody){
+    public void onNewTweetSubmitted(String tweetBody) {
         client.postTweet(tweetBody, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -115,7 +130,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
     }
 
 
-    public void getMoreTweets(long lastTweetId){
+    public void getMoreTweets(long lastTweetId) {
         client.getTweetsAfterMyTweet(lastTweetId, new JsonHttpResponseHandler() {
             // success
 

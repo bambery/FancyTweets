@@ -24,14 +24,34 @@ public class TweetListFragment extends Fragment{
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<Tweet> tweets;
 
+    //public static final String ARG_PAGE = "ARG_PAGE";
+    //private int mPage;
+
+    public static TweetListFragment newInstance(int page) {
+        Bundle args = new Bundle();
+        //args.putInt(ARG_PAGE, page);
+        TweetListFragment fragment = new TweetListFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //mPage = getArguments().getInt(ARG_PAGE);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        //create the arraylist from data source
+        tweets = new ArrayList<>();
+        // specify an adapter
+        aTweets = new com.codepath.apps.fancytweets.adapters.TweetsAdapter(getActivity(), tweets);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_tweets_list, container, false);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.rv_tweet_timeline);
-
         // use a linear layout manager
-
         mRecyclerView.setLayoutManager(mLayoutManager);
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -48,15 +68,6 @@ public class TweetListFragment extends Fragment{
         return v;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        //create the arraylist from data source
-        tweets = new ArrayList<>();
-        // specify an adapter
-        aTweets = new com.codepath.apps.fancytweets.adapters.TweetsAdapter(getActivity(), tweets);
-    }
 
     public void addAll(List<Tweet> incomingTweets){
         tweets.addAll(incomingTweets);
