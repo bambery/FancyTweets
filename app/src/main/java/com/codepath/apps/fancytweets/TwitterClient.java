@@ -6,6 +6,7 @@ import android.util.Log;
 import com.codepath.apps.fancytweets.models.Constants;
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.scribe.builder.api.Api;
@@ -47,11 +48,11 @@ public class TwitterClient extends OAuthBaseClient {
 	public void getInitialHomeTimeline(AsyncHttpResponseHandler handler){
 		getHomeTimeline(1, handler);
 	}
-
+/*
 	public void getLatestTweetsSince( long lastTweetId, AsyncHttpResponseHandler handler){
 		getHomeTimeline(lastTweetId, handler);
 	}
-
+*/
 	public void getTweetsAfterMyTweet(long myTweetId, AsyncHttpResponseHandler handler){
 		String apiUrl = getApiUrl("statuses/home_timeline.json");
 		// specify params
@@ -76,4 +77,13 @@ public class TwitterClient extends OAuthBaseClient {
 		getClient().post(apiUrl, params, handler);
 	}
 
+	public void getMentionsTimeline(JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/mentions_timeline.json");
+		// specify params
+		RequestParams params = new RequestParams();
+		params.put("count", 25); // grab 25 tweets
+		params.put("since_id", 1); // oldest id of tweet to grab
+		//execute request
+		getClient().get(apiUrl, params, handler);
+	}
 }
