@@ -113,8 +113,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
             public boolean onMenuItemClick(MenuItem item) {
                 int id = item.getItemId();
                 if (id == R.id.action_new_tweet) {
-                    Toast.makeText(getApplicationContext(), "you clicked it", Toast.LENGTH_SHORT).show();
-                    //showNewTweetDialog();
+                    showNewTweetDialog();
                     return true;
                 }
                 return false;

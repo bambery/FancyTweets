@@ -67,12 +67,15 @@ public class ComposeTweetDialog extends DialogFragment {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setStyle(STYLE_NO_TITLE, 0);
+        setStyle(STYLE_NO_FRAME, android.R.style.Theme_Holo_Light);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_compose_tweet, container);
+
 
         // x to close dialog
         ImageView ivClose = (ImageView) v.findViewById(R.id.ivComposeClose);
@@ -114,6 +117,7 @@ public class ComposeTweetDialog extends DialogFragment {
         etNewTweet = (EditText) view.findViewById(R.id.etComposeNewTweet);
         etNewTweet.requestFocus();
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
 
         // Get field from view
 
