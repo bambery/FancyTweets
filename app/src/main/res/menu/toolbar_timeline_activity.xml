@@ -11,5 +11,14 @@
         android:title="Compose New Tweet"
         android:layout_gravity="right"
         app:showAsAction="always"
+        android:orderInCategory="90"/>
+    <item
+        android:id="@+id/action_my_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/ic_person"
+        android:title="View My Profile"
+        android:layout_gravity="right"
+        app:showAsAction="always"
         android:orderInCategory="100"/>
 </menu>

@@ -41,6 +41,7 @@ public class User {
     }
 
     public static User getCurrentUser(){
+        //TODO error handling here if currentuser is unset
         return User.currentUser;
     }
 

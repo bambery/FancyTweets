@@ -1,5 +1,6 @@
 package com.codepath.apps.fancytweets.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -62,6 +63,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
     }
 
     // need to have a reference to "me", the person using the app
+    // TODO: refactor to save current user in the activity? Or somewhere global
     public void setCurrentUser(){
         if (currentUser == null) {
             client.getCurrentUser(new JsonHttpResponseHandler() {
@@ -100,6 +102,9 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
                 if (id == R.id.action_new_tweet) {
                     showNewTweetDialog();
                     return true;
+                } else if (id == R.id.action_my_profile) {
+                    launchMyProfile(User.getCurrentUser());
+                    return true;
                 }
                 return false;
             }
@@ -110,6 +115,13 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
         FragmentManager fm = getSupportFragmentManager();
         ComposeTweetDialog composeTweetDialog = ComposeTweetDialog.newInstance(User.getCurrentUser());
         composeTweetDialog.show(fm, "fragment_compose_tweet");
+    }
+
+    private void launchMyProfile(User user){
+        Intent i = new Intent(TimelineActivity.this, UserProfileActivity.class);
+        i.putExtra("uid", user.getUid());
+        i.putExtra("screenname", user.getScreenName());
+        startActivity(i);
     }
 
     @Override
