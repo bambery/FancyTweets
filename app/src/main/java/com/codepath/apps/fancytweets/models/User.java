@@ -9,9 +9,9 @@ public class User {
     private String screenName;
     private String profileImageUrl;
     private static User currentUser;
-    private int followersCount; // # following user
-    private int friendsCount; // # of people user is following
-    private int statusesCount; // # of tweets posted
+    private Long followersCount; // # following user
+    private Long friendsCount; // # of people user is following
+    private Long statusesCount; // # of tweets posted
     private String profileBannerUrl;
 
     public String getName() {
@@ -30,15 +30,15 @@ public class User {
         return profileImageUrl;
     }
 
-    public int getFollowersCount() {
+    public Long getFollowersCount() {
         return followersCount;
     }
 
-    public int getFriendsCount() {
+    public Long getFriendsCount() {
         return friendsCount;
     }
 
-    public int getStatusesCount() {
+    public Long getStatusesCount() {
         return statusesCount;
     }
 
@@ -53,13 +53,14 @@ public class User {
             u.uid = jsonObject.getLong("id");
             u.screenName = jsonObject.getString("screen_name");
             u.profileImageUrl = jsonObject.getString("profile_image_url");
-            u.followersCount = jsonObject.getInt("followers_count");
-            u.friendsCount = jsonObject.getInt("friends_count");
+            u.followersCount = jsonObject.getLong("followers_count");
+            u.friendsCount = jsonObject.getLong("friends_count");
             if ((jsonObject.has("profile_banner_url"))){
                 u.profileBannerUrl = jsonObject.getString("profile_banner_url");
             } else {
                 u.profileBannerUrl = null;
             }
+            u.statusesCount = jsonObject.getLong("statuses_count");
         } catch (JSONException e) {
 
             e.printStackTrace();

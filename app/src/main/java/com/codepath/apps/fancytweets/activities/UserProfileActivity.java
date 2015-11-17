@@ -8,7 +8,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.codepath.apps.fancytweets.R;
 import com.codepath.apps.fancytweets.TwitterApplication;
@@ -84,7 +86,28 @@ public class UserProfileActivity extends AppCompatActivity{
                 }
             });
         } else {
-            rlUserProfileHeader.setBackgroundColor(ContextCompat.getColor(this, R.color.twitter_light_blue));
+            rlUserProfileHeader.setBackgroundColor(ContextCompat.getColor(this, R.color.twitter_mid_grey));
         }
+
+        ImageView ivUserProfilePhoto = (ImageView) findViewById(R.id.ivUserProfilePhoto);
+        Picasso.with(this)
+                .load(mUser.getProfileImageUrl())
+         //       .placeholder(R.drawable.placeholder)
+                .into(ivUserProfilePhoto);
+
+        TextView tvUserProfileName = (TextView) findViewById(R.id.tvUserProfileName);
+        tvUserProfileName.setText(mUser.getName());
+
+        TextView tvUserProfileScreenname = (TextView) findViewById(R.id.tvUserProfileScreenname);
+        tvUserProfileScreenname.setText("@" + mUser.getScreenName());
+
+        TextView tvUserTweetCount = (TextView) findViewById(R.id.tvUserTweetCount);
+        tvUserTweetCount.setText(mUser.getStatusesCount().toString());
+
+        TextView tvUserFollowingCount = (TextView) findViewById(R.id.tvUserFollowingCount);
+        tvUserFollowingCount.setText(mUser.getFriendsCount().toString());
+
+        TextView tvUserFollowersCount = (TextView) findViewById(R.id.tvUserFollowersCount);
+        tvUserFollowersCount.setText(mUser.getFollowersCount().toString());
     }
 }

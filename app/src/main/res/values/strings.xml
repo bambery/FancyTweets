@@ -6,5 +6,8 @@
     <string name="title_activity_timeline">Home Timeline  </string>
     <string name="at_sign">\u0040</string>
     <string name="btn_tweet">Tweet</string>
+    <string name="user_profile_tweets">tweets</string>
+    <string name="user_profile_following">following</string>
+    <string name="user_profile_followers">followers</string>
 
 </resources>

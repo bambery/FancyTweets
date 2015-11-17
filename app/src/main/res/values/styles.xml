@@ -10,4 +10,16 @@
         <item name="background">@color/twitter_light_blue</item>
 
     </style>
+
+    <style name="UserProfileTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <item name="actionBarStyle">@style/MyActionBar</item>
+    </style>
+
+    <style name="MyActionUserProfileBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/twitter_light_blue</item>
+        <item name="background">@color/twitter_light_blue</item>
+
+    </style>
+
 </resources>
