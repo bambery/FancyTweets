@@ -132,6 +132,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 // regardless of activity, switch to the home timeline view to see new tweet after posting
                 Long newTweetId = Tweet.getPostedTweetId(response);
+                viewPager.setCurrentItem(0);
                 tweetsPagerAdapter.updateAfterPost(newTweetId);
             }
 
