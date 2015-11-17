@@ -13,6 +13,7 @@ public class TweetsPagerAdapter extends FragmentPagerAdapter {
     private HomeTimelineFragment homeTimelineFragment;
     private MentionsTimelineFragment mentionsTimelineFragment;
 
+    // TODO get this into strings.xml
     private String tabTitles[] = new String[] { "Home", "Mentions" };
     private Context context;
 

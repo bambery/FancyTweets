@@ -39,6 +39,8 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
     private HomeTimelineFragment homeTimelineFragment;
     TabLayout tabLayout;
     ViewPager viewPager;
+    TweetsPagerAdapter tweetsPagerAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +48,9 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
         setContentView(R.layout.activity_timeline);
         client = TwitterApplication.getRestClient(); // singleton client
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setAdapter(new TweetsPagerAdapter(getSupportFragmentManager(),
-                                                           TimelineActivity.this));
+        tweetsPagerAdapter = new TweetsPagerAdapter(getSupportFragmentManager(),
+                                                           TimelineActivity.this);
+        viewPager.setAdapter(tweetsPagerAdapter);
         //if (savedInstanceState == null) {
         //    tweetListFragment = (TweetListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_timeline);
         //
@@ -130,6 +133,9 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
                 Long newTweetId = Tweet.getPostedTweetId(response);
                 // TODO fix this
                 /// /HomeTimelineFragment.refreshAfterNewTweet(newTweetId);
+                tweetListFragment = (TweetListFragment) tweetsPagerAdapter.getItem(0);
+                tweetListFragment.refreshAfterNewTweet(newTweetId);
+                viewPager.setCurrentItem(0);
             }
 
             @Override

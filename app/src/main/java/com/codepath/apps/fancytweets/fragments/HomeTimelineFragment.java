@@ -41,23 +41,6 @@ public class HomeTimelineFragment extends TweetListFragment {
         });
     }
 
-    public void refreshAfterNewTweet(long myNewTweetId){
-        clearTweets();
-        client.getTweetsAfterMyTweet(myNewTweetId, new JsonHttpResponseHandler() {
-            // success
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                addAll(Tweet.fromJSONArray(response));
-            }
-
-            //failure
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("FAILURE DEBUG", errorResponse.toString());
-            }
-        });
-    }
     public void getMoreTweets() {
         long lastTweetId = getLastTweetId();
         client.getTweetsAfterMyTweet(lastTweetId, new JsonHttpResponseHandler() {
