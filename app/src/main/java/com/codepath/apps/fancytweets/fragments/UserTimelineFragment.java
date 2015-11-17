@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 public class UserTimelineFragment extends TweetListFragment {
     private TwitterClient client;
+    private Long uid;
 
     public static UserTimelineFragment newInstance(Long uid) {
         UserTimelineFragment userTimelineFragment = new UserTimelineFragment();
@@ -35,7 +36,7 @@ public class UserTimelineFragment extends TweetListFragment {
     //send api request to get the timeline json
     // fill listview by creating the tweet objects from the json
     private void populateTimeline() {
-        Long uid = getArguments().getLong("uid");
+        uid = getArguments().getLong("uid");
         client.getUserTimeline(uid, new JsonHttpResponseHandler() {
             // success
             @Override
@@ -49,7 +50,7 @@ public class UserTimelineFragment extends TweetListFragment {
             }
         });
     }
-
+/*
     public void refreshAfterNewTweet(long myNewTweetId){
         clearTweets();
         client.getTweetsAfterMyTweet(myNewTweetId, new JsonHttpResponseHandler() {
@@ -64,6 +65,23 @@ public class UserTimelineFragment extends TweetListFragment {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Log.d("FAILURE DEBUG", errorResponse.toString());
+            }
+        });
+    }
+    */
+
+    public void getMoreTweets() {
+        long lastTweetId = getLastTweetId();
+        client.getTweetsAfterThisTweet(lastTweetId, uid, new JsonHttpResponseHandler() {
+            // success
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                //deserialize json
+                //create models and add to adapter
+                //load data model into listview
+                //               ArrayList<Tweet> tweets = Tweet.fromJSONArray(response);
+                addAll(Tweet.fromJSONArray(response));
             }
         });
     }

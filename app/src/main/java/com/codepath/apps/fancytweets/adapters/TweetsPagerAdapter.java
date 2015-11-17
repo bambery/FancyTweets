@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.codepath.apps.fancytweets.fragments.HomeTimelineFragment;
 import com.codepath.apps.fancytweets.fragments.MentionsTimelineFragment;
+import com.codepath.apps.fancytweets.fragments.TweetListFragment;
 
 public class TweetsPagerAdapter extends FragmentPagerAdapter {
     final int PAGE_COUNT = 2;
@@ -44,9 +45,37 @@ public class TweetsPagerAdapter extends FragmentPagerAdapter {
         }
     }
 
+    public void updateAfterPost(long myNewTweetId){
+        TweetListFragment frag = (TweetListFragment) getItem(0);
+        frag.refreshAfterNewTweet(myNewTweetId);
+    }
+
     @Override
     public CharSequence getPageTitle(int position) {
         // Generate title based on item position
         return tabTitles[position];
     }
+
+    /*
+        @Override
+    public void onNewTweetSubmitted(String tweetBody) {
+        client.postTweet(tweetBody, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                // regardless of activity, switch to the home timeline view to see new tweet after posting
+                Long newTweetId = Tweet.getPostedTweetId(response);
+                // TODO is there a way to do this in the fragment itself? I was under the impression
+                // we were to attempt to avoid putting references to the fragments in here
+                tweetListFragment = (TweetListFragment) tweetsPagerAdapter.getItem(0);
+                tweetListFragment.refreshAfterNewTweet(newTweetId);
+                viewPager.setCurrentItem(0);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.d("ERROR", errorResponse.toString());
+            }
+        });
+    }
+     */
 }

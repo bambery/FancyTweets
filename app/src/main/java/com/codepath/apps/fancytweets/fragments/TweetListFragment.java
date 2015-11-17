@@ -26,7 +26,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TweetListFragment extends Fragment implements ComposeTweetDialog.OnSubmitNewTweetListener {
+// maybe this will be helpful for infinite scrolling in tabs?
+// https://github.com/codepath/android_guides/wiki/ViewPager-with-FragmentPagerAdapter
+
+public class TweetListFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private TweetsAdapter aTweets;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -71,46 +74,12 @@ public class TweetListFragment extends Fragment implements ComposeTweetDialog.On
         mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener() {
             @Override
             public void onLoadMore(int page) {
+                // this seems to be called right away, it shouldn't be?
                 getMoreTweets();
                 //return true; // ONLY if more data is actually being loaded; false otherwise.
             }
         });
         return v;
-    }
-
-    @Override
-    public void onNewTweetSubmitted(String tweetBody) {
-        client.postTweet(tweetBody, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Long newTweetId = Tweet.getPostedTweetId(response);
-                // TODO fix this
-                /// /HomeTimelineFragment.refreshAfterNewTweet(newTweetId);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("ERROR", errorResponse.toString());
-            }
-        });
-    }
-
-    public void refreshAfterNewTweet(long myNewTweetId){
-        clearTweets();
-        client.getTweetsAfterMyTweet(myNewTweetId, new JsonHttpResponseHandler() {
-            // success
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                addAll(Tweet.fromJSONArray(response));
-            }
-
-            //failure
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("FAILURE DEBUG", errorResponse.toString());
-            }
-        });
     }
 
     public void getMoreTweets() {
@@ -137,5 +106,23 @@ public class TweetListFragment extends Fragment implements ComposeTweetDialog.On
         aTweets.notifyDataSetChanged();
     }
 
+    public void refreshAfterNewTweet(long myNewTweetId){
+        clearTweets();
+
+        client.getTweetsAfterMyTweet(myNewTweetId, new JsonHttpResponseHandler() {
+            // success
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                addAll(Tweet.fromJSONArray(response));
+            }
+
+            //failure
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.d("FAILURE DEBUG", errorResponse.toString());
+            }
+        });
+    }
 
 }

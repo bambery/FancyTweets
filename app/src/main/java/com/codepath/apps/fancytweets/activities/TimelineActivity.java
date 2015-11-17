@@ -24,10 +24,10 @@ import com.codepath.apps.fancytweets.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class TimelineActivity extends AppCompatActivity implements ComposeTweetDialog.OnSubmitNewTweetListener  {
+public class TimelineActivity extends AppCompatActivity implements ComposeTweetDialog.OnSubmitNewTweetListener{
+//public class TimelineActivity extends AppCompatActivity {
 
     // sliding tab layout guide: https://guides.codepath.com/android/Google-Play-Style-Tabs-using-TabLayout
 
@@ -130,9 +130,20 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
         client.postTweet(tweetBody, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                // regardless of activity, switch to the home timeline view to see new tweet after posting
                 Long newTweetId = Tweet.getPostedTweetId(response);
-                // TODO fix this
-                /// /HomeTimelineFragment.refreshAfterNewTweet(newTweetId);
+                tweetsPagerAdapter.updateAfterPost(newTweetId);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.d("ERROR", errorResponse.toString());
+            }
+        });
+    }
+                /*
+                // TODO is there a way to do this in the fragment itself? I was under the impression
+                // we were to attempt to avoid putting references to the fragments in here
                 tweetListFragment = (TweetListFragment) tweetsPagerAdapter.getItem(0);
                 tweetListFragment.refreshAfterNewTweet(newTweetId);
                 viewPager.setCurrentItem(0);
@@ -143,8 +154,9 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
                 Log.d("ERROR", errorResponse.toString());
             }
         });
-    }
-
+        }
+*/
+/*
     public void getMoreTweets(long lastTweetId) {
         client.getTweetsAfterMyTweet(lastTweetId, new JsonHttpResponseHandler() {
             // success
@@ -165,10 +177,11 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
             }
         });
     }
-
+    */
+/*
     private long getLastTweetId(){
         //Log.d("DEBUG", "last tweet id " + tweets.get(tweets.size() - 1).getUid());
         //return (tweets.get(tweets.size() - 1).getUid());
         return 1;
-    }
+    }*/
 }

@@ -42,4 +42,19 @@ public class MentionsTimelineFragment extends TweetListFragment {
         });
     }
 
+    public void getMoreTweets() {
+        long lastTweetId = getLastTweetId();
+        client.getMoreMentions(lastTweetId, new JsonHttpResponseHandler() {
+            // success
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                //deserialize json
+                //create models and add to adapter
+                //load data model into listview
+                //               ArrayList<Tweet> tweets = Tweet.fromJSONArray(response);
+                addAll(Tweet.fromJSONArray(response));
+            }
+        });
+    }
 }
