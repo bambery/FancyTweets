@@ -1,9 +1,14 @@
 package com.codepath.apps.fancytweets.activities;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.RelativeLayout;
 
 import com.codepath.apps.fancytweets.R;
 import com.codepath.apps.fancytweets.TwitterApplication;
@@ -11,12 +16,14 @@ import com.codepath.apps.fancytweets.TwitterClient;
 import com.codepath.apps.fancytweets.fragments.UserTimelineFragment;
 import com.codepath.apps.fancytweets.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
 
 public class UserProfileActivity extends AppCompatActivity{
-    private User mUser;
+    User mUser;
     private TwitterClient client;
 
     @Override
@@ -29,8 +36,22 @@ public class UserProfileActivity extends AppCompatActivity{
         String screenname = getIntent().getStringExtra("screenname");
         //Long uid = getIntent().getLongExtra("uid", 1); // second param is a default, in this case me
         Long uid = getIntent().getLongExtra("uid", User.getCurrentUser().getUid()); // second param is a default, in this case me
-        mUser = getUser(uid, screenname);
+        client.getUserProfileInfo(uid, new JsonHttpResponseHandler() {
+                    // success
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        mUser = User.fromJSON(response);
+                        populateProfileHeader();
+                        // getSupportActionBar().setTitle(user.getScreenname());
+                    }
 
+                    //failure
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable t, JSONObject e) {
+                        // Handle the failure and alert the user to retry
+                        Log.e("ERROR", e.toString());
+                    }
+                });
 
         if(savedInstanceState == null) {
             //create the user timeline fragment
@@ -42,23 +63,28 @@ public class UserProfileActivity extends AppCompatActivity{
         }
     }
 
-    private User getUser(Long uid, String screenname){
-        client.getUserProfileInfo(uid, screenname, new JsonHttpResponseHandler() {
-            // success
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                mUser = User.fromJSON(response);
-                // getSupportActionBar().setTitle(user.getScreenname());
-            }
+    private void populateProfileHeader(){
+        final RelativeLayout rlUserProfileHeader = (RelativeLayout) findViewById(R.id.rlUserProfileHeader);
+        // maybe if you used Twitter more, Lauren, this wouldn't be broken.
+        if (mUser.getProfileBannerUrl() != null) {
+            Picasso.with(this).load(mUser.getProfileBannerUrl()).into(new Target() {
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    rlUserProfileHeader.setBackground(new BitmapDrawable(getResources(), bitmap));
+                }
 
-            //failure
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("FAILURE DEBUG", errorResponse.toString());
-                mUser = null;
-            }
-        });
+                @Override
+                public void onBitmapFailed(final Drawable errorDrawable) {
+                    Log.d("TAG", "FAILED");
+                }
 
-        return mUser;
+                @Override
+                public void onPrepareLoad(final Drawable placeHolderDrawable) {
+                    Log.d("TAG", "Prepare Load");
+                }
+            });
+        } else {
+            rlUserProfileHeader.setBackgroundColor(ContextCompat.getColor(this, R.color.twitter_light_blue));
+        }
     }
 }

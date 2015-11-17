@@ -11,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.codepath.apps.fancytweets.R;
 import com.codepath.apps.fancytweets.TwitterApplication;
@@ -61,7 +60,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
     }
 
     // need to have a reference to "me", the person using the app
-    // TODO: refactor to save current user in the activity? Or somewhere global
+    // TODO: refactor to save current user in the client since that's the only thing that actually cares
     public void setCurrentUser(){
         if (currentUser == null) {
             client.getCurrentUser(new JsonHttpResponseHandler() {
@@ -135,11 +134,10 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Toast.makeText(TimelineActivity.this, "Failed posting tweet", Toast.LENGTH_SHORT).show();
+                Log.d("ERROR", errorResponse.toString());
             }
         });
     }
-
 
     public void getMoreTweets(long lastTweetId) {
         client.getTweetsAfterMyTweet(lastTweetId, new JsonHttpResponseHandler() {
@@ -157,12 +155,10 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
             //failure
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("FAILURE DEBUG", errorResponse.toString());
+                Log.d("ERROR", errorResponse.toString());
             }
         });
     }
-
-
 
     private long getLastTweetId(){
         //Log.d("DEBUG", "last tweet id " + tweets.get(tweets.size() - 1).getUid());

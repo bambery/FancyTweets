@@ -30,6 +30,22 @@ public class User {
         return profileImageUrl;
     }
 
+    public int getFollowersCount() {
+        return followersCount;
+    }
+
+    public int getFriendsCount() {
+        return friendsCount;
+    }
+
+    public int getStatusesCount() {
+        return statusesCount;
+    }
+
+    public String getProfileBannerUrl() {
+        return profileBannerUrl;
+    }
+
     public static User fromJSON(JSONObject jsonObject){
         User u = new User();
         try {
@@ -39,12 +55,17 @@ public class User {
             u.profileImageUrl = jsonObject.getString("profile_image_url");
             u.followersCount = jsonObject.getInt("followers_count");
             u.friendsCount = jsonObject.getInt("friends_count");
-            u.profileBannerUrl = jsonObject.getString("profile_banner_url");
+            if ((jsonObject.has("profile_banner_url"))){
+                u.profileBannerUrl = jsonObject.getString("profile_banner_url");
+            } else {
+                u.profileBannerUrl = null;
+            }
         } catch (JSONException e) {
 
             e.printStackTrace();
         }
         return u;
+
     }
 
     public static User getCurrentUser(){
