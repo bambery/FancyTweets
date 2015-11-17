@@ -41,8 +41,6 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
     TabLayout tabLayout;
     ViewPager viewPager;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,7 +101,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
                     showNewTweetDialog();
                     return true;
                 } else if (id == R.id.action_my_profile) {
-                    launchMyProfile(User.getCurrentUser());
+                    launchUserProfile(User.getCurrentUser());
                     return true;
                 }
                 return false;
@@ -117,7 +115,8 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
         composeTweetDialog.show(fm, "fragment_compose_tweet");
     }
 
-    private void launchMyProfile(User user){
+
+    private void launchUserProfile(User user){
         Intent i = new Intent(TimelineActivity.this, UserProfileActivity.class);
         i.putExtra("uid", user.getUid());
         i.putExtra("screenname", user.getScreenName());

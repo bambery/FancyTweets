@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.codepath.apps.fancytweets.R;
@@ -26,7 +25,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         public TextView tvBody;
         public TextView tvScreenName;
         public TextView tvTimeSince;
-        public ViewHolder(LinearLayout v) {
+        public ViewHolder(View v) {
             super(v);
             ivProfileImage = (ImageView) v.findViewById(R.id.ivProfileImage);
             tvUsername = (TextView) v.findViewById(R.id.tvComposeUsername);
@@ -68,7 +67,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         View v = LayoutInflater.from(parent.getContext())
                          .inflate(R.layout.item_tweet_card, parent, false);
         // set the view's size, margins, paddings and layout parameters
-        ViewHolder vh = new ViewHolder((LinearLayout)v);
+        ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 

@@ -9,6 +9,10 @@ public class User {
     private String screenName;
     private String profileImageUrl;
     private static User currentUser;
+    private int followersCount; // # following user
+    private int friendsCount; // # of people user is following
+    private int statusesCount; // # of tweets posted
+    private String profileBannerUrl;
 
     public String getName() {
         return name;
@@ -33,6 +37,9 @@ public class User {
             u.uid = jsonObject.getLong("id");
             u.screenName = jsonObject.getString("screen_name");
             u.profileImageUrl = jsonObject.getString("profile_image_url");
+            u.followersCount = jsonObject.getInt("followers_count");
+            u.friendsCount = jsonObject.getInt("friends_count");
+            u.profileBannerUrl = jsonObject.getString("profile_banner_url");
         } catch (JSONException e) {
 
             e.printStackTrace();
@@ -41,7 +48,7 @@ public class User {
     }
 
     public static User getCurrentUser(){
-        //TODO error handling here if currentuser is unset
+        //TODO put this in the client
         return User.currentUser;
     }
 

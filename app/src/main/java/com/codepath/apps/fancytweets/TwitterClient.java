@@ -1,7 +1,6 @@
 package com.codepath.apps.fancytweets;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.codepath.apps.fancytweets.models.Constants;
 import com.codepath.oauth.OAuthBaseClient;
@@ -65,7 +64,6 @@ public class TwitterClient extends OAuthBaseClient {
 
 	// get user info about self
 	public void getCurrentUser(AsyncHttpResponseHandler handler){
-		Log.d("ERROR", "get current user...?");
 		String apiUrl = getApiUrl("account/verify_credentials.json");
 		getClient().get(apiUrl, null, handler);
 	}
@@ -87,11 +85,31 @@ public class TwitterClient extends OAuthBaseClient {
 		getClient().get(apiUrl, params, handler);
 	}
 
-	public void getUserProfile(Long uid, String screenname, JsonHttpResponseHandler handler){
+	public void getUserProfileInfo(Long uid, String screenname, JsonHttpResponseHandler handler){
 		String apiUrl = getApiUrl("users/show.json");
 		RequestParams params = new RequestParams();
 		params.put("user_id", uid);
 		params.put("screen_name", screenname);
 		getClient().get(apiUrl, params, handler);
 	}
+
+	public void getUserTimeline(Long uid, JsonHttpResponseHandler handler){
+		String apiUrl = getApiUrl("statuses/user_timeline.json");
+		RequestParams params = new RequestParams();
+		params.put("user_id", uid);
+		params.put("count", 25); // grab 25 tweets
+		params.put("since_id", 1); // oldest id of tweet to grab
+		//execute request
+		getClient().get(apiUrl, params, handler);
+	}
+    public void getTweetsAfterThisTweet(long myTweetId, AsyncHttpResponseHandler handler){
+        String apiUrl = getApiUrl("statuses/user_timeline.json");
+        // specify params
+        RequestParams params = new RequestParams();
+        params.put("count", 25); // grab 25 tweets
+        params.put("max_id", myTweetId); // oldest id of tweet to grab
+        //execute request
+        getClient().get(apiUrl, params, handler);
+    }
+
 }
