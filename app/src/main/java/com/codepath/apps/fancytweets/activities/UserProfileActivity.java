@@ -39,21 +39,21 @@ public class UserProfileActivity extends AppCompatActivity{
         //Long uid = getIntent().getLongExtra("uid", 1); // second param is a default, in this case me
         Long uid = getIntent().getLongExtra("uid", User.getCurrentUser().getUid()); // second param is a default, in this case me
         client.getUserProfileInfo(uid, new JsonHttpResponseHandler() {
-                    // success
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        mUser = User.fromJSON(response);
-                        populateProfileHeader();
-                        // getSupportActionBar().setTitle(user.getScreenname());
-                    }
+            // success
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                mUser = User.fromJSON(response);
+                populateProfileHeader();
+                getSupportActionBar().setTitle(mUser.getScreenName()); // why does this not work?
+            }
 
-                    //failure
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, Throwable t, JSONObject e) {
-                        // Handle the failure and alert the user to retry
-                        Log.e("ERROR", e.toString());
-                    }
-                });
+            //failure
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable t, JSONObject e) {
+                // Handle the failure and alert the user to retry
+                Log.e("ERROR", e.toString());
+            }
+        });
 
         if(savedInstanceState == null) {
             //create the user timeline fragment

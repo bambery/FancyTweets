@@ -115,7 +115,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
     }
 
 
-    private void launchUserProfile(User user){
+    public void launchUserProfile(User user){
         Intent i = new Intent(TimelineActivity.this, UserProfileActivity.class);
         i.putExtra("uid", user.getUid());
         i.putExtra("screenname", user.getScreenName());

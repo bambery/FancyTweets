@@ -9,5 +9,6 @@
     <string name="user_profile_tweets">tweets</string>
     <string name="user_profile_following">following</string>
     <string name="user_profile_followers">followers</string>
+    <string name="profile">profile</string>
 
 </resources>

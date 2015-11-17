@@ -48,7 +48,9 @@
         </activity>
         <activity android:name="com.codepath.apps.fancytweets.activities.UserProfileActivity"
                   android:theme="@style/UserProfileTheme"
-                  android:parentActivityName="com.codepath.apps.fancytweets.activities.TimelineActivity">
+                  android:parentActivityName="com.codepath.apps.fancytweets.activities.TimelineActivity"
+                  android:label="foobar"
+            >
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
