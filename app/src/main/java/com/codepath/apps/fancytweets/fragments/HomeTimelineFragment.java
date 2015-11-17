@@ -28,7 +28,6 @@ public class HomeTimelineFragment extends TweetListFragment {
     private void populateTimeline() {
         client.getInitialHomeTimeline(new JsonHttpResponseHandler() {
             // success
-
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 addAll(Tweet.fromJSONArray(response));
@@ -59,4 +58,20 @@ public class HomeTimelineFragment extends TweetListFragment {
             }
         });
     }
+    public void getMoreTweets() {
+        long lastTweetId = getLastTweetId();
+        client.getTweetsAfterMyTweet(lastTweetId, new JsonHttpResponseHandler() {
+            // success
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                //deserialize json
+                //create models and add to adapter
+                //load data model into listview
+                //               ArrayList<Tweet> tweets = Tweet.fromJSONArray(response);
+                addAll(Tweet.fromJSONArray(response));
+            }
+        });
+    }
+
 }

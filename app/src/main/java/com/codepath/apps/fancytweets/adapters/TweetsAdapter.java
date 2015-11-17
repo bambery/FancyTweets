@@ -22,7 +22,6 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     private Context mContext;
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        //public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView ivProfileImage;
         public TextView tvUsername;
         public TextView tvBody;

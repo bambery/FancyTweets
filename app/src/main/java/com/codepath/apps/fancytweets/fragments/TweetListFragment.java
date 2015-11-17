@@ -61,13 +61,21 @@ public class TweetListFragment extends Fragment{
         mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener() {
             @Override
             public void onLoadMore(int page) {
-                //getMoreTweets(getLastTweetId());
+                getMoreTweets();
                 //return true; // ONLY if more data is actually being loaded; false otherwise.
             }
         });
         return v;
     }
 
+    public void getMoreTweets() {
+        // I know Java has a way to enforce that child classes must implement this
+        // TODO find how to enforce this ^^
+    }
+
+    public long getLastTweetId(){
+        return (tweets.get(tweets.size() - 1).getUid());
+    }
 
     public void addAll(List<Tweet> incomingTweets){
         tweets.addAll(incomingTweets);

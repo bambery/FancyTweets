@@ -101,10 +101,11 @@ public class TwitterClient extends OAuthBaseClient {
 		//execute request
 		getClient().get(apiUrl, params, handler);
 	}
-    public void getTweetsAfterThisTweet(long myTweetId, AsyncHttpResponseHandler handler){
+    public void getTweetsAfterThisTweet(long myTweetId, long uid, AsyncHttpResponseHandler handler){
         String apiUrl = getApiUrl("statuses/user_timeline.json");
         // specify params
         RequestParams params = new RequestParams();
+        params.put("user_id", uid); // whose timeline are we getting?
         params.put("count", 25); // grab 25 tweets
         params.put("max_id", myTweetId); // oldest id of tweet to grab
         //execute request
